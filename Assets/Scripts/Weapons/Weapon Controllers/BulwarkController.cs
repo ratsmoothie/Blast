@@ -13,7 +13,7 @@ public class BulwarkController : WeaponController
     protected override void Attack()
     {
         base.Attack();
-        GameObject spawnedBulwark = Instantiate(weaponStats.weaponPrefab);
+        GameObject spawnedBulwark = Instantiate(weaponStats.WeaponPrefab);
         spawnedBulwark.transform.position = transform.position; //stick to the player
         spawnedBulwark.transform.parent = transform;
     }

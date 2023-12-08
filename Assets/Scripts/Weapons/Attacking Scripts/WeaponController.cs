@@ -10,12 +10,13 @@ public class WeaponController : MonoBehaviour
     public GameObject weaponPrefab;
     private float cooldownCurrent;
 
+    [Header("Components")]
     protected PlayerController playerController;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        cooldownCurrent = weaponStats.cooldownTotal; //stops weapon attacking immediately upon getting it
+        cooldownCurrent = weaponStats.CooldownTotal; //stops weapon attacking immediately upon getting it
 
         playerController = FindObjectOfType<PlayerController>();
     }
@@ -32,6 +33,6 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void Attack()
     {
-        cooldownCurrent = weaponStats.cooldownTotal;
+        cooldownCurrent = weaponStats.CooldownTotal;
     }
 }

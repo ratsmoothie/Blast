@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53af0e7e9197fda4a9891817cca1aed1, type: 3}
-  m_Name: Spear
+  m_Script: {fileID: 11500000, guid: 30c574538ea42e84386fa9f616490f82, type: 3}
+  m_Name: Bat
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 0}
-  damage: 0
-  speed: 0
-  cooldownTotal: 0
-  cleaveNum: 0
+  movementSpeed: 2
+  maxHealth: 10
+  damage: 7

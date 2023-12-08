@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [Header("Components")]
+    //public EnemyScriptableObject enemyStats;
+    EnemyStats enemy;
     Transform player;
-    public float movementSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        enemy = GetComponent<EnemyStats>();
         player = FindObjectOfType<PlayerController>().transform;
     }
 
@@ -17,6 +20,6 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         //Move towards the player at set speed
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, movementSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.currentMovementSpeed * Time.deltaTime);
     }
 }

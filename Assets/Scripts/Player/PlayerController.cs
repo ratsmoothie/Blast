@@ -8,9 +8,12 @@ public class PlayerController : MonoBehaviour
     PlayerCombatManager playerCombatManager;
     public Animator animator;
     public SpriteRenderer playerSpriteRenderer;
-
+    [SerializeField] private Rigidbody2D rb;
+    //public CharacterScriptableObject characterStats;
+    PlayerStats player;
+    
     [Header("Player Stats")]
-    public float movementSpeed;
+    //public float movementSpeed;
 
     //dash handling
     /*
@@ -31,12 +34,16 @@ public class PlayerController : MonoBehaviour
     //the layer we are on
     private int currentSortingOrder;
 
-    [SerializeField] private Rigidbody2D rb;
-
+    [HideInInspector]
     public Vector2 movementDirection;
+    [HideInInspector]
     public float mostRecentHorizontalVector;
+    [HideInInspector]
     public float mostRecentVerticalVector;
+    [HideInInspector]
     public Vector2 directionLastMoved;
+
+
     private Vector2 mousePosition;
 
     public float movementX;
@@ -52,6 +59,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GetComponent<PlayerStats>();
         rb = GetComponent<Rigidbody2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         directionLastMoved = new Vector2(1, 0f); //sets right as the default   
@@ -101,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         movementDirection = new Vector2(movementX, movementY).normalized;
 
-        rb.velocity = new Vector2(movementDirection.x * movementSpeed, movementDirection.y * movementSpeed);
+        rb.velocity = new Vector2(movementDirection.x * player.currentMovementSpeed, movementDirection.y * player.currentMovementSpeed);
 
             //saves the last direction we moved so the projectile still has a direction if the player is still
            if(movementDirection.x != 0)

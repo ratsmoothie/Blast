@@ -12,9 +12,12 @@ GameObject:
   - component: {fileID: 2160171514076016903}
   - component: {fileID: 2160171514076016902}
   - component: {fileID: 6116609500927618993}
-  m_Layer: 0
+  - component: {fileID: 918228547}
+  - component: {fileID: 918228552}
+  - component: {fileID: -5838213353938513728}
+  m_Layer: 6
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +119,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -132,3 +135,45 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.84375, y: 0.6875}
   m_EdgeRadius: 0
+--- !u!114 &918228547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2160171514076017017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f561511634ad146a7f4e34c5a849c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStats: {fileID: 11400000, guid: ad601672605ee2e4eb8db31ca0ec79dc, type: 2}
+--- !u!114 &918228552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2160171514076017017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77025854ee89d9945ab0834ae80d1020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStats: {fileID: 11400000, guid: ad601672605ee2e4eb8db31ca0ec79dc, type: 2}
+--- !u!114 &-5838213353938513728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2160171514076017017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acda3bddb54ea9540928bee341ee237a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - itemPrefab: {fileID: 8168135269575591590, guid: f55d42e7f9955ed44961454c455d3d10, type: 3}
+    itemName: Blue Gem
+    dropRate: 50

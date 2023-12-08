@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3795823675682211552}
   - component: {fileID: 3795823675682211553}
   - component: {fileID: -7822094223718357144}
+  - component: {fileID: 8898848588692222976}
   m_Layer: 0
   m_Name: Bulwark
   m_TagString: Untagged
@@ -97,4 +98,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b244045ca20ddd4a93ee8fc7a76ec8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponStats: {fileID: 11400000, guid: 0b5fcab21f50ba3458fa56b492286768, type: 2}
   durationUntilDestroy: 2
+--- !u!58 &8898848588692222976
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795823675682211554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.48

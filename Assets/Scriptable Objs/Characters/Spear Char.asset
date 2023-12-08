@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1370bb7f0e2e44982f3d7855b96bf5, type: 3}
+  m_Name: Spear Char
+  m_EditorClassIdentifier: 
+  startingWeapon: {fileID: 5578682257364174259, guid: d30f73d4e16ef9b48b1ec712059ebdc2, type: 3}
+  maxHealth: 100
+  healthRegen: 1
+  movementSpeed: 3.5
+  attackPower: 0
+  projectileSpeed: 0
+  magnetRange: 1.6

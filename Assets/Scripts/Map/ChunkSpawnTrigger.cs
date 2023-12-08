@@ -24,7 +24,7 @@ public class ChunkSpawnTrigger : MonoBehaviour
     {
         if (playerCollider.CompareTag("Player"))
         {
-            Debug.Log("Player entered trigger zone");
+            //Debug.Log("Player entered trigger zone.");
             mapGenerator.currentChunk = targetChunk;
         }
     }
@@ -41,7 +41,7 @@ public class ChunkSpawnTrigger : MonoBehaviour
     {
         if (playerCollider.CompareTag("Player"))
         {
-            Debug.Log("Player exited trigger zone");
+            //Debug.Log("Player exited trigger zone");
             if (mapGenerator.currentChunk == targetChunk)
             {
                 mapGenerator.currentChunk = null;

@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class BulwarkBehavior : MeleeController
 {
+    List<GameObject> enemiesTagged;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        enemiesTagged = new List<GameObject>();
     }
 
-    // Update is called once per frame
-    void Update()
+    //overrides our standard melee attack because this is not just a regular swing, it is a persistent aoe that should only hit each enemy once
+    //Once our bulwark connects with an enemy call their TakeDamage() function to hit them for the weapon's current damage
+    //Tag them and add them to a list, if said enemy is found in a list we cannot hit them again with the same instance of our bulwark
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
-        
+        if(col.CompareTag("Enemy") && !enemiesTagged.Contains(col.gameObject))
+        {
+            EnemyStats target = col.GetComponent<EnemyStats>();
+            target.TakeDamage(currentDamage);
+            Debug.Log($"<color=cyan>{this.gameObject.name}</color>  hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+
+            enemiesTagged.Add(col.gameObject);
+        }
+        else if(col.CompareTag("Prop"))
+        {
+            if(col.gameObject.TryGetComponent(out BreakableProps breakableProp))
+            {
+                breakableProp.TakeDamage(currentDamage);
+                Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+                
+                enemiesTagged.Add(col.gameObject);
+            }
+        }
     }
 }
