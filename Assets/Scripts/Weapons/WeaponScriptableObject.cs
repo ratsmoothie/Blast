@@ -29,4 +29,27 @@ public class WeaponScriptableObject : ScriptableObject
     [SerializeField]
     int cleaveNum; //amount of enemies our weapon will be able to hit in one attack before disappearing
     public int CleaveNum { get => cleaveNum; private set => cleaveNum = value; }
+
+    [SerializeField]
+    int weaponLevel;
+    public int WeaponLevel { get => weaponLevel; private set => weaponLevel = value; }
+
+    [SerializeField]
+    GameObject nextLevelPrefab; //next level of this weapon
+    public GameObject NextLevelPrefab { get => nextLevelPrefab; private set => nextLevelPrefab = value; }
+
+    [SerializeField]
+    string name;
+    public string Name { get => name; private set => name = value; }
+
+    [SerializeField]
+    string description;
+    public string Description { get => description; private set => description = value; }
+
+    [SerializeField]
+    Sprite weaponSprite;
+    public Sprite WeaponSprite { get => weaponSprite; private set => weaponSprite = value; }
+
+
+
 }

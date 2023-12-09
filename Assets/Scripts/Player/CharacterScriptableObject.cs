@@ -41,5 +41,13 @@ public class CharacterScriptableObject : ScriptableObject
     float magnetRange;
 
     public float MagnetRange { get => magnetRange; private set => magnetRange = value; }
+
+    [SerializeField]
+    Sprite charSprite;
+    public Sprite CharSprite { get => charSprite; private set => charSprite = value; }
+
+    [SerializeField]
+    new string charName;
+    public string CharName { get => charName; private set => charName = value; }
     
 }

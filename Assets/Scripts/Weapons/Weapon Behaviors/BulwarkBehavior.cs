@@ -18,11 +18,14 @@ public class BulwarkBehavior : MeleeController
     //Tag them and add them to a list, if said enemy is found in a list we cannot hit them again with the same instance of our bulwark
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
+        float printWeaponDamage = GetCurrentDamage();
+
         if(col.CompareTag("Enemy") && !enemiesTagged.Contains(col.gameObject))
         {
+            base.hitSound.Play();
             EnemyStats target = col.GetComponent<EnemyStats>();
-            target.TakeDamage(currentDamage);
-            Debug.Log($"<color=cyan>{this.gameObject.name}</color>  hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+            target.TakeDamage(GetCurrentDamage());           
+            //Debug.Log($"<color=cyan>{this.gameObject.name}</color>  hit <color=red>{col.gameObject.name}</color> for <color=yellow>{printWeaponDamage}</color> damage!");
 
             enemiesTagged.Add(col.gameObject);
         }
@@ -30,8 +33,9 @@ public class BulwarkBehavior : MeleeController
         {
             if(col.gameObject.TryGetComponent(out BreakableProps breakableProp))
             {
-                breakableProp.TakeDamage(currentDamage);
-                Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+                base.hitSound.Play();
+                breakableProp.TakeDamage(GetCurrentDamage());
+                //Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{printWeaponDamage}</color> damage!");
                 
                 enemiesTagged.Add(col.gameObject);
             }

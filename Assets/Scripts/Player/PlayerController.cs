@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<PlayerStats>();
         rb = GetComponent<Rigidbody2D>();
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         directionLastMoved = new Vector2(1, 0f); //sets right as the default   
     }
 
@@ -93,6 +93,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //inputs
+        if(GameManager.instance.isGameOver)
+        {
+            return;    
+        }
+
         playerMouse();
         PlayerMovement();      
     }
@@ -138,11 +143,12 @@ public class PlayerController : MonoBehaviour
         //handles player facing the correct direction while running
         if (movementX > 0 && !runningLeft)
         {
-            Flip();
+            Flip();        
         }
         if (movementX < 0 && runningLeft)
         {
             Flip();
+            //playerSpriteRenderer.flipX = false;
         }
 
         //down movement animation
@@ -178,10 +184,16 @@ public class PlayerController : MonoBehaviour
     //flips the sprite
     void Flip()
     {
-        Vector3 currentScale = gameObject.transform.localScale;
-        currentScale.x *= -1;
-        gameObject.transform.localScale = currentScale;
+        if (runningLeft)
+        {
+            playerSpriteRenderer.flipX = false;
+        }
+        else
+        {
+            playerSpriteRenderer.flipX = true;
+        }
 
+        // Toggle the runningLeft state
         runningLeft = !runningLeft;
     }
 

@@ -6,6 +6,8 @@ public class ProjectileController : MonoBehaviour
 {
     [Header("Components")]
     public WeaponScriptableObject weaponStats;
+    PlayerStats player;
+    public AudioSource hitSound;
 
     //projectile orientation and how long they exist for
     protected Vector3 projectileDirection;
@@ -25,6 +27,9 @@ public class ProjectileController : MonoBehaviour
         currentSpeed = weaponStats.Speed;
         currentCooldownTotal = weaponStats.CooldownTotal;
         currentCleaveNum = weaponStats.CleaveNum;
+
+        player = FindObjectOfType<PlayerStats>();
+        hitSound = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -92,16 +97,18 @@ public class ProjectileController : MonoBehaviour
         if(col.CompareTag("Enemy"))
         {
             EnemyStats target = col.GetComponent<EnemyStats>(); //get the stats of the enemy we hit
-            target.TakeDamage(currentDamage); //cal the target's TakeDamage() function and pass in our current weapon damage
-            Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+            hitSound.Play();
+            target.TakeDamage(GetCurrentDamage()); //cal the target's TakeDamage() function and pass in our current weapon damage
+            Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{GetCurrentDamage()}</color> damage!");
             ReduceCleaveNum();
         }
         else if(col.CompareTag("Prop"))
         {
             if(col.gameObject.TryGetComponent(out BreakableProps breakableProp))
             {
-                breakableProp.TakeDamage(currentDamage);
-                Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{currentDamage}</color> damage!");
+                hitSound.Play();
+                breakableProp.TakeDamage(GetCurrentDamage());
+                Debug.Log($"<color=cyan>{this.gameObject.name}</color> hit <color=red>{col.gameObject.name}</color> for <color=yellow>{GetCurrentDamage()}</color> damage!");
                 ReduceCleaveNum();
             }
         }
@@ -115,5 +122,10 @@ public class ProjectileController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public float GetCurrentDamage()
+    {
+        return currentDamage *= player.currentAttackPower;
     }
 }

@@ -15,7 +15,9 @@ MonoBehaviour:
   startingWeapon: {fileID: 5578682257364174259, guid: d30f73d4e16ef9b48b1ec712059ebdc2, type: 3}
   maxHealth: 100
   healthRegen: 1
-  movementSpeed: 3.5
-  attackPower: 0
+  movementSpeed: 4
+  attackPower: 1
   projectileSpeed: 0
-  magnetRange: 1.6
+  magnetRange: 1.8
+  charSprite: {fileID: 8793639957104055765, guid: 9c447c54c8e0416e9446cadb88c48fd3, type: 3}
+  charName: Major Tom

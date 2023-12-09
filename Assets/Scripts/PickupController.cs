@@ -16,6 +16,12 @@ public class PickupController : MonoBehaviour
 
     void OnDestroy()
     {
+        //prevents living enemies from creating an error when stopping play
+        if(!gameObject.scene.isLoaded)
+        {
+            return;
+        }
+
         float roll = UnityEngine.Random.Range(0f, 100f);
         List<Drops> possibleDrops = new List<Drops>();
 

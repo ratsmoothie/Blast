@@ -5,6 +5,7 @@ using UnityEngine;
 public class BreakableProps : MonoBehaviour
 {
     public float propHealth;
+    public AudioSource breakSound;
 
     public void TakeDamage(float damageTaken)
     {
@@ -19,5 +20,6 @@ public class BreakableProps : MonoBehaviour
     public void DestroyProp()
     {
         Destroy(this.gameObject);
+        breakSound.Play();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public EnemyScriptableObject enemyStats;
+    public AudioSource deathSound;
 
     //enemy's current stats
     [HideInInspector]
@@ -14,6 +15,9 @@ public class EnemyStats : MonoBehaviour
     [HideInInspector]
     public float currentDamage;
 
+    public float respawnDistance = 20f;
+    Transform player;
+
     void Awake()
     {
         //before start each enemy is assigned their regular values
@@ -21,6 +25,16 @@ public class EnemyStats : MonoBehaviour
         currentMovementSpeed = enemyStats.MovementSpeed;
         currentHealth = enemyStats.MaxHealth;
         currentDamage = enemyStats.Damage;
+
+        player = FindObjectOfType<PlayerStats>().transform;
+    }
+
+    void Update()
+    {
+        if(Vector2.Distance(transform.position, player.position) >= respawnDistance)
+        {
+            RespawnEnemy();
+        }
     }
 
     public void TakeDamage(float damageTaken)
@@ -37,7 +51,15 @@ public class EnemyStats : MonoBehaviour
     {
         //add some flair here later
 
+        EnemySpawner enemySpawner = FindObjectOfType<EnemySpawner>();
+        enemySpawner.OnEnemyKilled();
         Destroy(this.gameObject);
+    }
+
+    void RespawnEnemy()
+    {
+        EnemySpawner enemySpawner = FindObjectOfType<EnemySpawner>();
+        transform.position = player.position + enemySpawner.relativeSpawnPoints[Random.Range(0, enemySpawner.relativeSpawnPoints.Count)].position;
     }
 
     //Deal damage to the player while in contact
@@ -57,4 +79,5 @@ public class EnemyStats : MonoBehaviour
             }
         }
     }
+    
 }

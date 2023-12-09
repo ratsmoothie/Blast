@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //Referenced https://www.youtube.com/watch?v=qREiQ5vSAng
 
 public class PlayerStats : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     public CharacterScriptableObject characterStats;
 
     //player's current stats
-    [HideInInspector]
+    //[HideInInspector]
     public float currentHealth;
     [HideInInspector]
     public float currentHealthRegen;
@@ -21,8 +22,6 @@ public class PlayerStats : MonoBehaviour
     public float currentProjectileSpeed;
     [HideInInspector]
     public float currentMagnetRange;
-
-    public List<GameObject> playerWeapons;
 
     [Header("XP & Levelling")]
     public int xp = 0;
@@ -46,10 +45,25 @@ public class PlayerStats : MonoBehaviour
 
     public List<LevelRange> levelRanges;
 
+    InventoryManager inventory;
+    public int weaponIndex;
+    public int passiveItemIndex;
+
+    [Header("UI")]
+    public Image healthBar;
+    public Image xpBar;
+    public Text levelText;
+
+
+    public GameObject secondWeaponTest;
+    public GameObject firstPassiveItemTest, secondPassiveItemTest;
+
     void Awake()
     {
         characterStats = CharacterSelector.GetStats();
         CharacterSelector.instance.DestroySingleton();
+
+        inventory = GetComponent<InventoryManager>();
 
         currentHealth = characterStats.MaxHealth;
         currentHealthRegen = characterStats.HealthRegen;
@@ -59,12 +73,23 @@ public class PlayerStats : MonoBehaviour
         currentMagnetRange = characterStats.MagnetRange;
 
         SpawnWeapon(characterStats.StartingWeapon);
+
+        //Test code for inventory
+        //SpawnWeapon(secondWeaponTest);
+        //SpawnPassiveItem(firstPassiveItemTest);
+        //SpawnPassiveItem(secondPassiveItemTest);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         xpCap = levelRanges[0].xpCapIncrease;
+
+        GameManager.instance.ShowCharacterInResults(characterStats);
+
+        UpdateHealthBar();
+        UpdateXPBar();
+        UpdateLevelText();
     }
 
     void Update()
@@ -80,6 +105,9 @@ public class PlayerStats : MonoBehaviour
         }
 
         HealthRegen();
+        UpdateHealthBar();
+        UpdateXPBar();
+        UpdateLevelText();
     }
 
     public void IncreaseXP(int xpGain)
@@ -110,6 +138,8 @@ public class PlayerStats : MonoBehaviour
 
         xpCap += xpCapIncrease;
         Debug.Log("Level Up! Player is now level " + level);
+
+        GameManager.instance.StartLevelUp();
     }
 
     public void TakeDamage(float damageTaken)
@@ -131,7 +161,14 @@ public class PlayerStats : MonoBehaviour
 
     public void Kill()
     {
-        Debug.Log("You died. ");
+        if(!GameManager.instance.isGameOver)
+        {
+            GameManager.instance.ShowLevelInResults(level);
+            GameManager.instance.ShowWeaponsAndItemsInResults(inventory.weaponUISlots, inventory.passiveItemUISlots);
+            GameManager.instance.GameOver();
+            Debug.Log("You died. ");
+        }
+        
         //Destroy(this.gameObject);
     }
 
@@ -165,9 +202,45 @@ public class PlayerStats : MonoBehaviour
 
     public void SpawnWeapon(GameObject weapon)
     {
+        if(weaponIndex >= (inventory.weaponSlots.Count - 1))
+        {
+            Debug.LogError("Inventory full");
+            return;
+        }
         GameObject spawnedWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
         spawnedWeapon.transform.SetParent(transform);
-        playerWeapons.Add(spawnedWeapon);
+        inventory.AddWeapon(weaponIndex, spawnedWeapon.GetComponent<WeaponController>());
+
+        weaponIndex++;
+    }
+
+    public void SpawnPassiveItem(GameObject passiveItem)
+    {
+        if(passiveItemIndex >= (inventory.passiveItemSlots.Count - 1))
+        {
+            Debug.LogError("Inventory full");
+            return;
+        }
+        GameObject spawnedPassiveItem = Instantiate(passiveItem, transform.position, Quaternion.identity);
+        spawnedPassiveItem.transform.SetParent(transform);
+        inventory.AddPassiveItem(passiveItemIndex, spawnedPassiveItem.GetComponent<PassiveItem>());
+
+        passiveItemIndex++;
+    }
+
+    void UpdateHealthBar()
+    {
+        healthBar.fillAmount = (currentHealth / characterStats.MaxHealth);
+    }
+
+    void UpdateXPBar()
+    {
+        xpBar.fillAmount = (float)xp / xpCap;
+    }
+
+    void UpdateLevelText()
+    {
+        levelText.text = "LVL " + level.ToString();
     }
 
 }
